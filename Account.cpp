@@ -190,15 +190,17 @@ Account* Pool::getAccount(const std::string& accountNumber)
 void Pool::save() const
 {
     std::ofstream outputFile(OUTPUT_FILE_NAME, std::ios::app);
+    std::ios_base::fmtflags orig = outputFile.flags();
     if (!outputFile) throw std::runtime_error("Failed to open file "+ OUTPUT_FILE_NAME);
     for (const auto& i : accounts)
     {
         auto saving = i.second;
-        outputFile << "Account:\t" << saving->getNumber() << std::endl;
-        outputFile << "Name:\t\t"    << saving->getName() << std::endl;
-        outputFile << "ID:\t\t\t"      << saving->getId().getId() << std::endl;
-        outputFile << "Password:\t"<< std::hex << std::setw(sizeof(size_t) * 2) << std::setfill('0') << saving->password.hashed << std::endl;
-        outputFile << "Balance\t\t"  << saving->getBalance() << std::endl;
+        outputFile << "Account:\t"  << saving->getNumber() << std::endl;
+        outputFile << "Name:\t\t"   << saving->getName() << std::endl;
+        outputFile << "ID:\t\t\t"   << saving->getId().getId() << std::endl;
+        outputFile << "Password:\t" << std::hex << std::setw(sizeof(size_t) * 2) << std::setfill('0') << saving->password.hashed << std::endl;
+        outputFile.flags(orig);
+        outputFile << "Balance\t\t" << saving->getBalance() << std::endl;
         outputFile << std::endl;
     }
 }
