@@ -38,9 +38,9 @@ int main()
             Password newPassword;
             Ui::doubleCheckPassword(newPassword);
 
-            Account newAccount(accountNumber, newName, newId, newPassword);
-            pool.newAccount(&newAccount);
-            Ui::accountCreated(newAccount);
+            Account* newAccount = new Account(accountNumber, newName, newId, newPassword);
+            pool.newAccount(newAccount);
+            Ui::accountCreated(*newAccount);
 
             Ui::clearData();
             Ui::pause();
