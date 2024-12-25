@@ -92,6 +92,7 @@ int main()
                     Password newPassword;
                     Ui::doubleCheckPassword(newPassword);
                     currentAccount->changePassword(newPassword);
+                    break;
                 default:
                     break;
                 }
